@@ -7,8 +7,8 @@ const Header = () => {
     <div className="header">
       <input type="text" className="search-bar" placeholder="Поиск" />
       <div className="logo">
-        <Link className="Nazvanie" to="/">
-          Gamigos
+        <Link className="Nazvanie" to="/signup">
+          SignUp
         </Link>
       </div>
       <div className="header-buttons"></div>
