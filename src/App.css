@@ -24,6 +24,7 @@ body {
 }
 
 .search-bar {
+  max-width: 260px;
   flex: 1;
   margin-right: 10px;
   border: 1px solid #ccc;
@@ -62,4 +63,42 @@ body {
   color: rgb(241, 240, 236);
   font-size: 28px;
   font-family: "Pacifico", cursive;
+}
+.Nazvanie {
+  font-family: "Arial", sans-serif;
+  font-weight: bold;
+  text-decoration: none;
+  color: #ffa600;
+
+  transition: background-color 0.3s ease;
+}
+
+.Nazvanie:hover {
+  color: #ffffff;
+}
+
+.homepage {
+  font-size: 36px;
+  font-family: "Arial", sans-serif;
+  font-weight: bold;
+  text-decoration: none;
+  color: #e5ab59;
+
+  transition: background-color 0.3s ease;
+}
+
+.homepage:hover {
+  color: #ffffff;
+}
+
+.card-row {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.card-row > * {
+  flex-basis: calc(33.33% - 10px);
+  margin-bottom: 20px;
 }

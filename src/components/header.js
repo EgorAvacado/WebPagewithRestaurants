@@ -5,7 +5,9 @@ import { Link } from "react-router-dom";
 const Header = () => {
   return (
     <div className="header">
-      <input type="text" className="search-bar" placeholder="Поиск" />
+      <Link className="homepage" to="/home">
+        CafeMigom
+      </Link>
       <div className="logo">
         <Link className="Nazvanie" to="/signup">
           SignUp

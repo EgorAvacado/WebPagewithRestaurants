@@ -6,41 +6,49 @@ import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import axios from "axios";
+import { useState } from "react";
 
 const defaultTheme = createTheme();
 
 export default function SignUp() {
+  const [alertMessage, setAlertMessage] = useState(null);
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    const username = document.getElementById("username").value;
+    const telephone = document.getElementById("telephone").value;
+    const password = document.getElementById("password").value;
+
+    const userData = {
+      username,
+      telephone,
+      password,
+    };
+
+    axios
+      .post("http://localhost:5001/api/user/registration", userData)
+      .then((response) => {
+        console.log(response.data);
+        setAlertMessage({
+          type: "success",
+          message: "Регистрация успешна!",
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+        setAlertMessage({
+          type: "error",
+          message: "Ошибка при регистрации.",
+        });
+      });
   };
 
   return (
@@ -74,35 +82,25 @@ export default function SignUp() {
               sx={{ mt: 3 }}
             >
               <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12}>
                   <TextField
                     autoComplete="given-name"
-                    name="firstName"
+                    name="username"
                     required
                     fullWidth
-                    id="firstName"
-                    label="First Name"
+                    id="username"
+                    label="UserName"
                     autoFocus
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    required
-                    fullWidth
-                    id="lastName"
-                    label="Last Name"
-                    name="lastName"
-                    autoComplete="family-name"
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
                     required
                     fullWidth
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
+                    id="telephone"
+                    label="Telephone number"
+                    name="telephone"
+                    autoComplete="telephone"
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -121,7 +119,7 @@ export default function SignUp() {
                     control={
                       <Checkbox value="allowExtraEmails" color="primary" />
                     }
-                    label="I want to receive inspiration, marketing promotions and updates via email."
+                    label="Я согласен оценить данный проект оценкой 7 или выше"
                   />
                 </Grid>
               </Grid>
@@ -133,6 +131,14 @@ export default function SignUp() {
               >
                 Sign Up
               </Button>
+              {alertMessage && (
+                <Alert severity={alertMessage.type}>
+                  <AlertTitle>
+                    {alertMessage.type === "success" ? "Success" : "Error"}
+                  </AlertTitle>
+                  {alertMessage.message}
+                </Alert>
+              )}
               <Grid container justifyContent="flex-end">
                 <Grid item>
                   <Link href="#" variant="body2">
@@ -142,7 +148,6 @@ export default function SignUp() {
               </Grid>
             </Box>
           </Box>
-          <Copyright sx={{ mt: 5 }} />
         </Container>
       </ThemeProvider>
     </Container>
