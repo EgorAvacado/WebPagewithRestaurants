@@ -32,7 +32,7 @@ export default function MultiActionAreaCard() {
           <CardActionArea>
             <CardMedia
               component="img"
-              height="320"
+              height="420"
               image={restaurant.image || "/cafe.png"}
               alt={restaurant.name || "green iguana"}
             />
