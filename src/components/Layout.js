@@ -14,14 +14,7 @@ export const Layout = (props) => {
           <p></p>
         </div>
         <div className="card-row">
-          <MultiActionAreaCard /> {/* Первая карточка */}
-          <MultiActionAreaCard /> {/* Вторая карточка */}
-          <MultiActionAreaCard /> {/* Третья карточка */}
-        </div>
-        <div className="card-row">
-          <MultiActionAreaCard /> {/* Четвертая карточка */}
-          <MultiActionAreaCard /> {/* Пятая карточка */}
-          <MultiActionAreaCard /> {/* Шестая карточка */}
+          <MultiActionAreaCard />
         </div>
       </div>
     </>
