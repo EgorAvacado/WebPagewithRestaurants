@@ -14,14 +14,10 @@ export default function CommentsDialog({ restaurantId, onClose, open }) {
   const [commentsWithUsernames, setCommentsWithUsernames] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (open) {
-        await fetchComments();
-      }
-    };
-
-    fetchData();
-  }, [open, fetchComments]);
+    if (open) {
+      fetchComments();
+    }
+  }, [open]);
 
   const fetchComments = async () => {
     try {
