@@ -1,5 +1,7 @@
 import * as React from "react";
+import { useState } from "react";
 import Card from "@mui/material/Card";
+import CommentsDialog from "./CommentsDialog";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
@@ -8,6 +10,7 @@ import axios from "axios";
 
 export default function MultiActionAreaCard() {
   const [restaurantData, setRestaurantData] = React.useState([]);
+  const [selectedRestaurant, setSelectedRestaurant] = useState(null);
 
   React.useEffect(() => {
     fetchRestaurantData();
@@ -23,6 +26,14 @@ export default function MultiActionAreaCard() {
     } catch (error) {
       console.error("Ошибка при получении данных о ресторанах:", error);
     }
+  };
+
+  const handleCommentsOpen = (restaurantId) => {
+    setSelectedRestaurant(restaurantId);
+  };
+
+  const handleCommentsClose = () => {
+    setSelectedRestaurant(null);
   };
 
   return (
@@ -47,12 +58,21 @@ export default function MultiActionAreaCard() {
             </CardContent>
           </CardActionArea>
           <CardActions>
-            <Button size="small" color="primary">
+            <Button
+              size="small"
+              color="primary"
+              onClick={() => handleCommentsOpen(restaurant.id)}
+            >
               Комментарии
             </Button>
           </CardActions>
         </Card>
       ))}
+      <CommentsDialog
+        restaurantId={selectedRestaurant}
+        onClose={handleCommentsClose}
+        open={Boolean(selectedRestaurant)}
+      />
     </>
   );
 }
