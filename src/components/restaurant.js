@@ -6,6 +6,7 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Button, CardActionArea, CardActions } from "@mui/material";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 export default function MultiActionAreaCard() {
@@ -40,23 +41,28 @@ export default function MultiActionAreaCard() {
     <>
       {restaurantData.map((restaurant, index) => (
         <Card key={index} sx={{ maxWidth: 466 }}>
-          <CardActionArea>
-            <CardMedia
-              component="img"
-              height="420"
-              image={restaurant.image || "/cafe.png"}
-              alt={restaurant.name || "green iguana"}
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                {restaurant.name || "Cafe"}
-              </Typography>
-              <Typography variant="h5" color="black">
-                {restaurant.description ||
-                  "This amazing place with amazing food! So, see you soon!!"}
-              </Typography>
-            </CardContent>
-          </CardActionArea>
+          <Link
+            to={`/restaurant/${restaurant.id}`}
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            <CardActionArea>
+              <CardMedia
+                component="img"
+                height="420"
+                image={restaurant.image || "/cafe.png"}
+                alt={restaurant.name || "green iguana"}
+              />
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  {restaurant.name || "Cafe"}
+                </Typography>
+                <Typography variant="h5" color="black">
+                  {restaurant.description ||
+                    "This amazing place with amazing food! So, see you soon!!"}
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Link>
           <CardActions>
             <Button
               size="small"
