@@ -4,6 +4,7 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import "./App.css";
 import { Layout } from "./components/Layout";
 import SignUp from "./components/SighUp";
+import SignIn from "./components/SignIn";
 import RestaurantDetailsPage from "./components/RestaurantDetailsPage";
 const App = () => {
   const currentLocation = useLocation();
@@ -19,6 +20,7 @@ const App = () => {
             element={<RestaurantDetailsPage />}
           />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/SignIn" element={<SignIn />} />
         </Route>
       </Routes>
     </>

@@ -38,12 +38,12 @@ body {
   box-shadow: 0 0 5px rgba(171, 3, 3, 0.5);
 }
 
-/* Header.css */
 .logo {
   flex: 1;
   text-align: center;
   font-size: 24px;
   cursor: pointer;
+  justify-content: space-between;
 }
 
 .greeting-container {
@@ -69,7 +69,7 @@ body {
   font-weight: bold;
   text-decoration: none;
   color: #ffa600;
-
+  margin-right: 10px;
   transition: background-color 0.3s ease;
 }
 

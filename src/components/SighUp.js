@@ -21,11 +21,36 @@ const defaultTheme = createTheme();
 
 export default function SignUp() {
   const [alertMessage, setAlertMessage] = useState(null);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const username = document.getElementById("username").value;
     const telephone = document.getElementById("telephone").value;
     const password = document.getElementById("password").value;
+
+    if (!username || !telephone || !password) {
+      setAlertMessage({
+        type: "error",
+        message: "Все поля должны быть заполнены.",
+      });
+      return;
+    }
+
+    if (telephone.length !== 9) {
+      setAlertMessage({
+        type: "error",
+        message: "Телефонный номер должен содержать 9 цифр.",
+      });
+      return;
+    }
+
+    if (password.length < 6) {
+      setAlertMessage({
+        type: "error",
+        message: "Пароль должен содержать не менее 6 символов.",
+      });
+      return;
+    }
 
     const userData = {
       username,
@@ -141,8 +166,8 @@ export default function SignUp() {
               )}
               <Grid container justifyContent="flex-end">
                 <Grid item>
-                  <Link href="#" variant="body2">
-                    Already have an account? Sign in
+                  <Link href="/SignIn" variant="body2">
+                    Уже есть аккаунт? Sign in!
                   </Link>
                 </Grid>
               </Grid>
