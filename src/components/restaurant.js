@@ -2,16 +2,17 @@ import * as React from "react";
 import { useState } from "react";
 import Card from "@mui/material/Card";
 import CommentsDialog from "./CommentsDialog";
+import StaticDateTimePickerLandscape from "./Reservation"; // Предположим, что это ваш компонент для заказа столика
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Button, CardActionArea, CardActions } from "@mui/material";
-import { Link } from "react-router-dom";
 import axios from "axios";
 
 export default function MultiActionAreaCard() {
   const [restaurantData, setRestaurantData] = React.useState([]);
   const [selectedRestaurant, setSelectedRestaurant] = useState(null);
+  const [showReservationPicker, setShowReservationPicker] = useState(false);
 
   React.useEffect(() => {
     fetchRestaurantData();
@@ -37,32 +38,38 @@ export default function MultiActionAreaCard() {
     setSelectedRestaurant(null);
   };
 
+  const handleReservationClick = (restaurantId) => {
+    setShowReservationPicker(true);
+    console.log(restaurantId);
+  };
+
+  const handleReservationClose = (restaurantId) => {
+    setShowReservationPicker(false);
+    setSelectedRestaurant(null);
+    console.log(restaurantId);
+  };
+
   return (
     <>
       {restaurantData.map((restaurant, index) => (
         <Card key={index} sx={{ maxWidth: 466 }}>
-          <Link
-            to={`/restaurant/${restaurant.id}`}
-            style={{ textDecoration: "none", color: "inherit" }}
-          >
-            <CardActionArea>
-              <CardMedia
-                component="img"
-                height="420"
-                image={restaurant.image || "/cafe.png"}
-                alt={restaurant.name || "green iguana"}
-              />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                  {restaurant.name || "Cafe"}
-                </Typography>
-                <Typography variant="h5" color="black">
-                  {restaurant.description ||
-                    "This amazing place with amazing food! So, see you soon!!"}
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Link>
+          <CardActionArea onClick={() => handleReservationClick(restaurant.id)}>
+            <CardMedia
+              component="img"
+              height="420"
+              image={restaurant.image || "/cafe.png"}
+              alt={restaurant.name || "green iguana"}
+            />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div">
+                {restaurant.name || "Cafe"}
+              </Typography>
+              <Typography variant="h5" color="black">
+                {restaurant.description ||
+                  "This amazing place with amazing food! So, see you soon!!"}
+              </Typography>
+            </CardContent>
+          </CardActionArea>
           <CardActions>
             <Button
               size="small"
@@ -79,6 +86,12 @@ export default function MultiActionAreaCard() {
         onClose={handleCommentsClose}
         open={Boolean(selectedRestaurant)}
       />
+      {showReservationPicker && (
+        <StaticDateTimePickerLandscape
+          restaurantId={selectedRestaurant}
+          onClose={() => handleReservationClose(selectedRestaurant)}
+        />
+      )}
     </>
   );
 }
