@@ -12,9 +12,11 @@ const Header = () => {
         <Link className="Nazvanie" to="/signup">
           SignUp
         </Link>
-
         <Link className="Nazvanie" to="/SignIn">
           SignIn
+        </Link>
+        <Link className="Nazvanie" to="/Youracc">
+          Your Page
         </Link>
       </div>
       <div className="header-buttons"></div>

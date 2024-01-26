@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 import Card from "@mui/material/Card";
+import AddComment from "./AddComment";
 import CommentsDialog from "./CommentsDialog";
 import StaticDateTimePickerLandscape from "./Reservation"; // Предположим, что это ваш компонент для заказа столика
 import CardContent from "@mui/material/CardContent";
@@ -13,7 +14,8 @@ export default function MultiActionAreaCard() {
   const [restaurantData, setRestaurantData] = React.useState([]);
   const [selectedRestaurant, setSelectedRestaurant] = useState(null);
   const [showReservationPicker, setShowReservationPicker] = useState(false);
-  const [showComments, setShowComments] = useState(false); // новое состояние
+  const [showComments, setShowComments] = useState(false);
+  const [showAddComment, setShowAddComment] = useState(false); // Новое состояние для отображения формы добавления комментария
 
   React.useEffect(() => {
     fetchRestaurantData();
@@ -33,23 +35,41 @@ export default function MultiActionAreaCard() {
 
   const handleCommentsOpen = (restaurantId) => {
     setSelectedRestaurant(restaurantId);
-    setShowComments(true); // открываем комментарии
+    setShowComments(true);
   };
 
   const handleCommentsClose = () => {
     setSelectedRestaurant(null);
-    setShowComments(false); // закрываем комментарии
+    setShowComments(false);
   };
 
   const handleReservationClick = (restaurantId) => {
     setSelectedRestaurant(restaurantId);
     setShowReservationPicker(true);
-    setShowComments(false); // закрываем комментарии при открытии резервации
+    setShowComments(false);
   };
 
   const handleReservationClose = () => {
     setShowReservationPicker(false);
     setSelectedRestaurant(null);
+  };
+
+  const handleAddCommentClick = (restaurantId) => {
+    setSelectedRestaurant(restaurantId);
+    setShowAddComment(true);
+  };
+
+  const handleAddCommentClose = () => {
+    setShowAddComment(false);
+  };
+
+  const handleAddCommentSubmit = (comment) => {
+    // Здесь вы можете отправить комментарий на сервер или выполнить другие действия
+    console.log(
+      `Добавлен комментарий для ресторана ${selectedRestaurant}: ${comment}`
+    );
+    // Закрываем форму добавления комментария
+    handleAddCommentClose();
   };
 
   return (
@@ -81,6 +101,13 @@ export default function MultiActionAreaCard() {
             >
               Комментарии
             </Button>
+            <Button
+              size="small"
+              color="primary"
+              onClick={() => handleAddCommentClick(restaurant.id)}
+            >
+              Добавить комментарий
+            </Button>
           </CardActions>
         </Card>
       ))}
@@ -93,6 +120,14 @@ export default function MultiActionAreaCard() {
         <StaticDateTimePickerLandscape
           restaurantId={selectedRestaurant}
           onClose={handleReservationClose}
+        />
+      )}
+      {showAddComment && (
+        <AddComment
+          restaurantId={selectedRestaurant}
+          open={showAddComment}
+          onClose={handleAddCommentClose}
+          onSubmit={handleAddCommentSubmit}
         />
       )}
     </>

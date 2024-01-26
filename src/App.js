@@ -5,6 +5,8 @@ import "./App.css";
 import { Layout } from "./components/Layout";
 import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
+import UserAccount from "./components/UserAccount";
+
 const App = () => {
   const currentLocation = useLocation();
 
@@ -16,6 +18,7 @@ const App = () => {
           <Route path="/" element={<Layout />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/SignIn" element={<SignIn />} />
+          <Route path="/Youracc" element={<UserAccount />} />
         </Route>
       </Routes>
     </>
