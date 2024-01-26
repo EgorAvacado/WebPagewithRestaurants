@@ -13,6 +13,7 @@ export default function MultiActionAreaCard() {
   const [restaurantData, setRestaurantData] = React.useState([]);
   const [selectedRestaurant, setSelectedRestaurant] = useState(null);
   const [showReservationPicker, setShowReservationPicker] = useState(false);
+  const [showComments, setShowComments] = useState(false); // новое состояние
 
   React.useEffect(() => {
     fetchRestaurantData();
@@ -32,21 +33,23 @@ export default function MultiActionAreaCard() {
 
   const handleCommentsOpen = (restaurantId) => {
     setSelectedRestaurant(restaurantId);
+    setShowComments(true); // открываем комментарии
   };
 
   const handleCommentsClose = () => {
     setSelectedRestaurant(null);
+    setShowComments(false); // закрываем комментарии
   };
 
   const handleReservationClick = (restaurantId) => {
+    setSelectedRestaurant(restaurantId);
     setShowReservationPicker(true);
-    console.log(restaurantId);
+    setShowComments(false); // закрываем комментарии при открытии резервации
   };
 
-  const handleReservationClose = (restaurantId) => {
+  const handleReservationClose = () => {
     setShowReservationPicker(false);
     setSelectedRestaurant(null);
-    console.log(restaurantId);
   };
 
   return (
@@ -84,12 +87,12 @@ export default function MultiActionAreaCard() {
       <CommentsDialog
         restaurantId={selectedRestaurant}
         onClose={handleCommentsClose}
-        open={Boolean(selectedRestaurant)}
+        open={Boolean(selectedRestaurant && showComments)}
       />
       {showReservationPicker && (
         <StaticDateTimePickerLandscape
           restaurantId={selectedRestaurant}
-          onClose={() => handleReservationClose(selectedRestaurant)}
+          onClose={handleReservationClose}
         />
       )}
     </>
